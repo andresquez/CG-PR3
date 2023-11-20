@@ -239,11 +239,22 @@ void setUp() {
         1.0f,                  // Specular coefficient
         50.0f,                 // Specular exponent, specular is the light that reflects off the surface, the higher the value the more it reflects, meaning that its less vis
         0.3f,                  // Reflectivity (somewhat reflective)
-        0.3f                   // Transparency (mostly transparent)
+        0.5f                   // Transparency (mostly transparent)
     };
 
     Material grass = {
         Color(50, 205, 50),    // Diffuse color for grass
+        0.8f,                  // Diffuse coefficient
+        0.2f,                  // Specular coefficient
+        30.0f,                 // Specular exponent
+        0.0f,                  // Reflectivity (not reflective)
+        0.0f                   // Transparency (not transparent)
+    };
+
+    // material leaves
+    // dark green color, no reflectivity, little transparency
+    Material leaves = {
+        Color(0, 100, 0),    // Diffuse color for grass
         0.8f,                  // Diffuse coefficient
         0.2f,                  // Specular coefficient
         30.0f,                 // Specular exponent
@@ -279,16 +290,16 @@ void setUp() {
     };
 
     Material wood = {
-        Color(139, 69, 19),   // Diffuse color for wood
+        Color(171, 146, 94),   // Diffuse color for wood
         0.8f,                  // Diffuse coefficient
         0.2f,                  // Specular coefficient
-        10.0f,                 // Specular exponent
-        0.0f,                  // Reflectivity (no refleja)
+        100.0f,                 // Specular exponent
+        0.1f,                  // Reflectivity (no refleja)
         0.0f                   // Transparency (no transparente)
     };
 
 
-        // Create the ground
+    // Create the ground
     for (int i = -3; i <= 3; ++i) {
         for (int j = -3; j <= 3; ++j) {
             objects.push_back(new Cube(glm::vec3(i, -2.0f, j), 1.0f, dirt));
@@ -322,23 +333,71 @@ void setUp() {
     // Obsidian cube on 1 spot that is on the middle of the last mine
     objects.push_back(new Cube(glm::vec3(0, -5.0f, 0), 1.0f, rock));
 
-    
-
-    // Create a pond
-    for (int i = -2; i <= 2; ++i) {
-        for (int j = -2; j <= 2; ++j) {
-            objects.push_back(new Cube(glm::vec3(i, -1.5f, j), 1.0f, water));
-        }
-    }
 
     // add grass around the pond 
     for (int i = -3; i <= 3; ++i) {
         for (int j = -3; j <= 3; ++j) {
-            objects.push_back(new Cube(glm::vec3(i, -1.5f, j), 1.0f, grass));
+
+            // create a 2x2 pond in one corner of the scene
+            if ((i == 2 && j == 2) || (i == 2 && j == 1) || (i == 1 && j == 2) || (i == 1 && j == 1)) {
+                objects.push_back(new Cube(glm::vec3(i, -1.5f, j), 1.0f, water));
+            } 
+            else {
+                objects.push_back(new Cube(glm::vec3(i, -1.5f, j), 1.0f, grass));
+            }
         }
     }
 
+    // create a upper layer of grass
+    for (int i = -3; i <= 0.5; ++i) {
+        for (int j = -3; j <= 0.5; ++j) {
+            objects.push_back(new Cube(glm::vec3(i, -1.0f, j), 1.0f, grass));
+        }
+    }
+
+    // create a house of wood on the upper layer of grass
+    // create the walls
+    for (int i = -3; i <= -1; ++i) {
+        for (int j = -3; j <= -1; ++j) {
+            // make the door of the house in the middle of the wall that is facing the camera
+            if (i == -2 && j == -1) {
+                objects.push_back(new Cube(glm::vec3(i, 0.0f, j), 1.0f, rubber));
+                objects.push_back(new Cube(glm::vec3(i, 1.0f, j), 1.0f, rubber));
+            } 
+            else {
+                objects.push_back(new Cube(glm::vec3(i, 0.0f, j), 1.0f, wood));
+                objects.push_back(new Cube(glm::vec3(i, 1.0f, j), 1.0f, wood));
+
+            }
+        }
+    }
+
+    // tree besides the house
+    objects.push_back(new Cube(glm::vec3(3.0f, -1.0f, -2.0f), 1.0f, wood));
+    objects.push_back(new Cube(glm::vec3(3.0f, 0.0f, -2.0f), 1.0f, wood));
+    // leaves are 3x3x2
+    // with the center of them at the trunk
+    for (int i = 2; i <= 4; ++i) {
+        for (int j = 1; j <= 2; ++j) {
+            for (int k = -3; k <= -1; ++k) {
+                objects.push_back(new Cube(glm::vec3(i, j, k), 1.0f, leaves));
+            }
+
+        }
+    }
+
+
+    // create the roof
+    // piramid roof on top of the house
+    for (int i = -4; i <= 0; ++i) {
+        for (int j = -4; j <= 0; ++j) {
+            objects.push_back(new Cube(glm::vec3(i, 2.0f, j), 1.0f, wood));
+        }
+    }
+        
+
 }
+
 
 void render() {
     float fov = 3.1415/3;
@@ -429,19 +488,15 @@ int main(int argc, char* argv[]) {
                         camera.move(1.0f);
                         break;
                     case SDLK_LEFT:
-                        print("left");
                         camera.rotate(-1.0f, 0.0f);
                         break;
                     case SDLK_a:
-                        print("left");
                         camera.rotate(-1.0f, 0.0f);
                         break;
                     case SDLK_d:
-                        print("right");
                         camera.rotate(1.0f, 0.0f);
                         break;     
                     case SDLK_RIGHT:
-                        print("right");
                         camera.rotate(1.0f, 0.0f);
                         break;
                     case SDLK_w:
