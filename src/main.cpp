@@ -151,6 +151,8 @@ void createMinecraftScene() {
 
 void setUp() {
 
+    camera.position = glm::vec3(0.0f, 0.0f, 15.0f);
+
     // light.position = glm::vec3(0.0f, 0.0f, 5.0f);
     light.intensity = 2.0f;
     light.color = Color(255, 255, 255);
@@ -204,10 +206,29 @@ void setUp() {
 
     // Diamond material
     Material diamond = {
-        Color(255, 0, 0),
-        0.0f,
+        Color(59, 255, 248),
+        1.0f,
         10.0f,
         1425.0f,
+        0.5f,
+        0.2f
+    };
+
+    Material iron = {
+        Color(163, 126, 103),
+        0.8f,
+        0.2f,
+        10.0f,
+        0.0f,
+        0.0f
+    };
+
+    // Obsidian material,
+    Material obsidian = {
+        Color(0, 0, 0),
+        0.8f,
+        0.2f,
+        10.0f,
         0.0f,
         0.0f
     };
@@ -231,11 +252,11 @@ void setUp() {
     };
 
     Material rock = {
-        Color(169, 169, 169),  // Diffuse color for rock
-        0.7f,                  // Diffuse coefficient
+        Color(87, 85, 85),  // Diffuse color for rock
+        0.2f,
         0.3f,                  // Specular coefficient
-        20.0f,                 // Specular exponent
-        0.2f,                  // Reflectivity (somewhat reflective)
+        0.0f,                 // Specular exponent
+        0.0f,                  // Reflectivity (somewhat reflective)
         0.0f                   // Transparency (not transparent)
     };
 
@@ -274,6 +295,34 @@ void setUp() {
         }
     }
 
+    // Create a stone mine under the ground
+    for (int i = -2; i <= 2; ++i) {
+        for (int j = -2; j <= 2; ++j) {
+            if ((i == -2 && j == 2) || (i == 2 && j == -1) || (i == 1 && j == 2) || (i == -1 && j == -2)) {
+                objects.push_back(new Cube(glm::vec3(i, -3.0f, j), 1.0f, iron));
+            } 
+            else {
+                objects.push_back(new Cube(glm::vec3(i, -3.0f, j), 1.0f, rock));
+            }
+        }
+    }
+
+    // Create another stone mine under the ground, 1x deeper and 1x smaller
+    for (int i = -1; i <= 1; ++i) {
+        for (int j = -1; j <= 1; ++j) {
+            if ((i == -1 && j == 1) || (i == 1 && j == -1) || (i == 0 && j == 1) || (i == -1 && j == 0)) {
+                objects.push_back(new Cube(glm::vec3(i, -4.0f, j), 1.0f, diamond));
+            } 
+            else {
+                objects.push_back(new Cube(glm::vec3(i, -4.0f, j), 1.0f, rock));
+            }
+        }
+    }
+
+    // Obsidian cube on 1 spot that is on the middle of the last mine
+    objects.push_back(new Cube(glm::vec3(0, -5.0f, 0), 1.0f, rock));
+
+    
 
     // Create a pond
     for (int i = -2; i <= 2; ++i) {
@@ -383,15 +432,23 @@ int main(int argc, char* argv[]) {
                         print("left");
                         camera.rotate(-1.0f, 0.0f);
                         break;
+                    case SDLK_a:
+                        print("left");
+                        camera.rotate(-1.0f, 0.0f);
+                        break;
+                    case SDLK_d:
+                        print("right");
+                        camera.rotate(1.0f, 0.0f);
+                        break;     
                     case SDLK_RIGHT:
                         print("right");
                         camera.rotate(1.0f, 0.0f);
                         break;
                     case SDLK_w:
-                        camera.position.y += 0.5f;  // Ajusta el valor según sea necesario
+                        camera.position.y += 1.0f;  // Ajusta el valor según sea necesario
                         break;
                     case SDLK_s:
-                        camera.position.y -= 0.5f;  // Ajusta el valor según sea necesario
+                        camera.position.y -= 1.0f;  // Ajusta el valor según sea necesario
                         break;
                 }
             }
@@ -414,7 +471,7 @@ int main(int argc, char* argv[]) {
         // Calculate and display FPS
         if (SDL_GetTicks() - currentTime >= 1000) {
             currentTime = SDL_GetTicks();
-            std::string title = "Hello World - FPS: " + std::to_string(frameCount);
+            std::string title = "quesoScene - FPS: " + std::to_string(frameCount);
             SDL_SetWindowTitle(window, title.c_str());
             frameCount = 0;
         }
