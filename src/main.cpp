@@ -360,10 +360,15 @@ void setUp() {
     for (int i = -3; i <= -1; ++i) {
         for (int j = -3; j <= -1; ++j) {
             // make the door of the house in the middle of the wall that is facing the camera
-            if (i == -2 && j == -1) {
+            if ((i == -2 && j == -1)) {
                 objects.push_back(new Cube(glm::vec3(i, 0.0f, j), 1.0f, rubber));
                 objects.push_back(new Cube(glm::vec3(i, 1.0f, j), 1.0f, rubber));
             } 
+            // make a window on the other walls of the house
+            else if ((i == -3 && j == -2) || (i == -2 && j == -3) || ) {
+                objects.push_back(new Cube(glm::vec3(i, 0.0f, j), 1.0f, wood));
+                objects.push_back(new Cube(glm::vec3(i, 1.0f, j), 1.0f, glass));
+            }
             else {
                 objects.push_back(new Cube(glm::vec3(i, 0.0f, j), 1.0f, wood));
                 objects.push_back(new Cube(glm::vec3(i, 1.0f, j), 1.0f, wood));
@@ -390,8 +395,18 @@ void setUp() {
     // create the roof
     // piramid roof on top of the house
     for (int i = -4; i <= 0; ++i) {
-        for (int j = -4; j <= 0; ++j) {
-            objects.push_back(new Cube(glm::vec3(i, 2.0f, j), 1.0f, wood));
+        for (int j = -4; j <= 0; ++j) {    
+
+            // if it is the 2x2 center of the roof, do another layer
+            if ((i == -2 && j == -2) || (i == -2 && j == -1) || (i == -1 && j == -2) || (i == -1 && j == -1) || (i == -3 && j == -2) || (i == -3 && j == -1) || (i == -2 && j == -3) || (i == -1 && j == -3) || (i == -3 && j == -3)) {
+                objects.push_back(new Cube(glm::vec3(i, 2.0f, j), 1.0f, wood));
+                objects.push_back(new Cube(glm::vec3(i, 3.0f, j), 1.0f, wood));
+            } 
+            else {
+                objects.push_back(new Cube(glm::vec3(i, 2.0f, j), 1.0f, wood));
+            }
+
+
         }
     }
         
