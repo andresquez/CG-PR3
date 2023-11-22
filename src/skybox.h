@@ -1,7 +1,7 @@
 #include <string>
 #include <glm/glm.hpp>
 #include "color.h"
-#include <SDL_image.h> // Include this for SDL_Surface
+#include <SDL_image.h> 
 
 class Skybox {
 public:
