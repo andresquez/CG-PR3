@@ -16,12 +16,17 @@
 #include "light.h"
 #include "camera.h"
 #include "SOIL.h"
+#include "skybox.h"
+
 
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 const float ASPECT_RATIO = static_cast<float>(SCREEN_WIDTH) / static_cast<float>(SCREEN_HEIGHT);
 const int MAX_RECURSION = 3;
 const float BIAS = 0.0001f;
+
+// skybox
+Skybox skybox("../images/sunset.png");
 
 SDL_Renderer* renderer;
 std::vector<Object*> objects;
@@ -63,7 +68,7 @@ Color castRay(const glm::vec3& rayOrigin, const glm::vec3& rayDirection, const s
     }
 
     if (!intersect.isIntersecting || recursion == MAX_RECURSION) {
-        return Color(173, 216, 230);
+        return skybox.getColor(rayDirection);  // Usar el color del skybox si no hay intersección
     }
 
 
