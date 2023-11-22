@@ -524,14 +524,11 @@ int main(int argc, char* argv[]) {
 
             if (event.type == SDL_KEYDOWN) {
                 switch(event.key.keysym.sym) {
-                    case SDLK_UP:
+                    case SDLK_o:
                         camera.move(-1.0f);
                         break;
-                    case SDLK_DOWN:
+                    case SDLK_p:
                         camera.move(1.0f);
-                        break;
-                    case SDLK_LEFT:
-                        camera.rotate(-1.0f, 0.0f);
                         break;
                     case SDLK_a:
                         camera.rotate(-1.0f, 0.0f);
@@ -539,21 +536,29 @@ int main(int argc, char* argv[]) {
                     case SDLK_d:
                         camera.rotate(1.0f, 0.0f);
                         break;     
-                    case SDLK_RIGHT:
-                        camera.rotate(1.0f, 0.0f);
-                        break;
                     case SDLK_w:
-                        camera.position.y += 1.0f;  // Ajusta el valor según sea necesario
+                        camera.position.y += 1.0f;  
                         break;
                     case SDLK_s:
-                        camera.position.y -= 1.0f;  // Ajusta el valor según sea necesario
+                        camera.position.y -= 1.0f;  
+                        break;
+                    case SDLK_LEFT:
+                        light.position.x -= 1.0f;
+                        break;
+                    case SDLK_RIGHT:
+                        light.position.x += 1.0f;
+                        break;
+                    case SDLK_UP:
+                        light.position.y += 1.0f;
+                        break;
+                    case SDLK_DOWN:
+                        light.position.y -= 1.0f;
                         break;
                 }
             }
 
         }
 
-        light.position = camera.position;
 
         // Clear the screen
         SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
