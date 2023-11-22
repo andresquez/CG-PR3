@@ -191,7 +191,7 @@ void setUp() {
         10.0f,
         1425.0f,
         0.2f,
-        1.0f,
+        0.9f,
     };
 
     // Agrega un cubo a la escena
@@ -290,12 +290,35 @@ void setUp() {
     };
 
     Material wood = {
-        Color(171, 146, 94),   // Diffuse color for wood
+        Color(150, 124, 64),  // Color marrón claro para simular la madera
+        0.8f,                 // Coeficiente difuso
+        0.0f,                 // Coeficiente especular
+        0.0f,                // Exponente especular
+        0.0f,                 // Reflectividad (ligeramente reflectante)
+        0.0f,                 // Transparencia (no transparente)
+        0.0f,                 // Índice de refracción
+    };
+
+
+    // Material wood2 (dark brown)
+    Material wood2 = {
+        Color(139, 69, 19),   // Diffuse color for wood
         0.8f,                  // Diffuse coefficient
-        0.2f,                  // Specular coefficient
-        100.0f,                 // Specular exponent
-        0.1f,                  // Reflectivity (no refleja)
+        0.3f,                  // Specular coefficient
+        50.0f,                 // Specular exponent
+        0.0f,                  // Reflectivity (no refleja)
         0.0f                   // Transparency (no transparente)
+    };
+
+
+    // Material pig (pink)
+    Material pig = {
+        Color(255, 192, 203),
+        0.8f,
+        0.2f,
+        10.0f,
+        0.0f,
+        0.0f
     };
 
 
@@ -365,7 +388,7 @@ void setUp() {
                 objects.push_back(new Cube(glm::vec3(i, 1.0f, j), 1.0f, rubber));
             } 
             // make a window on the other walls of the house
-            else if ((i == -3 && j == -2) || (i == -2 && j == -3) || ) {
+            else if ((i == -3 && j == -2) || (i == -2 && j == -3) || (i == -1 && j == -2)) {
                 objects.push_back(new Cube(glm::vec3(i, 0.0f, j), 1.0f, wood));
                 objects.push_back(new Cube(glm::vec3(i, 1.0f, j), 1.0f, glass));
             }
@@ -378,8 +401,9 @@ void setUp() {
     }
 
     // tree besides the house
-    objects.push_back(new Cube(glm::vec3(3.0f, -1.0f, -2.0f), 1.0f, wood));
-    objects.push_back(new Cube(glm::vec3(3.0f, 0.0f, -2.0f), 1.0f, wood));
+    objects.push_back(new Cube(glm::vec3(3.0f, -1.0f, -2.0f), 1.0f, wood2));
+    objects.push_back(new Cube(glm::vec3(3.0f, 0.0f, -2.0f), 1.0f, wood2));
+    objects.push_back(new Cube(glm::vec3(3.0f, 3.0f, -2.0f), 1.0f, leaves));
     // leaves are 3x3x2
     // with the center of them at the trunk
     for (int i = 2; i <= 4; ++i) {
@@ -387,7 +411,6 @@ void setUp() {
             for (int k = -3; k <= -1; ++k) {
                 objects.push_back(new Cube(glm::vec3(i, j, k), 1.0f, leaves));
             }
-
         }
     }
 
@@ -409,7 +432,12 @@ void setUp() {
 
         }
     }
-        
+
+    // create the final layer of the roof , one cube at the center of the hosue
+    objects.push_back(new Cube(glm::vec3(-2.0f, 4.0f, -2.0f), 1.0f, wood));
+
+    // create a pig in front of the house
+    objects.push_back(new Cube(glm::vec3(-2.0f, -1.0f, 3.0f), 1.0f, pig));
 
 }
 
@@ -458,9 +486,9 @@ int main(int argc, char* argv[]) {
 
     // Create a window
     SDL_Window* window = SDL_CreateWindow("Hello World - FPS: 0", 
-                                          SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
-                                          SCREEN_WIDTH, SCREEN_HEIGHT, 
-                                          SDL_WINDOW_SHOWN);
+        SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 
+        SCREEN_WIDTH, SCREEN_HEIGHT, 
+        SDL_WINDOW_SHOWN);
 
     if (!window) {
         SDL_Log("Unable to create window: %s", SDL_GetError());
