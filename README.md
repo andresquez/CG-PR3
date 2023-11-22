@@ -1,15 +1,18 @@
-# CG-PR1
-Project #1 - Computer Graphics
+# CG-PR3
+Project #3 - Computer Graphics
 
 # Explicación
-- El proyecto consiste en la renderización en tiempo real de un sistema solar de 1 estrella y 4 planetas. Los cuerpos celestes están alineados en un plano eclíptico.
-- Los planetas tienen traslación y rotación propia.
-- Se implementó una nave espacial que sigue a la cámara, y la cámara se puede mover en 6 direcciones (arriba, abajo, adelante, atras, izquierda y derecha).
-- Se implementó un skybox que muestra estrellas en el horizonte.
+- El proyecto consiste en la renderización en tiempo real de un diorama al estilo minecraft
+- Ray Tracing para renderizar el diorama
+- Se crean cubos de 11 diferentes materiales que interactuan con la luz
+- Se implementó un skybox que muestra un paisaje alrededor
+- Los materiales tienen diferentes propiedades de reflexión, refracción, difusión, etc.
 
 # Controles
-- wasd: mover la nave
-- flechas: mover la camara
+- wasd: mover la cámara
+- o: zoom out
+- p: zoom in
+- flechas: mover la luz
 
 # Lenguaje
 - C++
@@ -21,41 +24,43 @@ Project #1 - Computer Graphics
 
 
 # Rúbrica
-- [x] (0 a 30 puntos) [Criterio subjetivo] Por la estética de su sistema completo
-   - **Razón:** 30/30 si esta bello jejeje
 
-- [x] (0 a 20 puntos) [Criterio subjetivo] Por el rendimiento de la escena completa. No es necesario mantener 60 frames por segundo, es suficiente con que se sienta apropiado.
-   - **Razón:** Llega hasta a 220 fps, y siempre tiene como minimo 60 fps
+## Criterios Subjetivos
+- [x] (0 a 30 puntos) Por la complejidad de la escena.
+  - **Razón:**  30/30 La escena es compleja y detallada, con 11 diferentes materiales y un skybox.
 
-- [x] (0 a 50 puntos) 10 Puntos por cada planeta / estrella / luna en el sistema.
-   - **Razón:** 50/50, hay 4 planetas y 1 estrella
+- [x] (0 a 20 puntos) Por la atractividad visual de la escena.
+  - **Razón:** 20/20 Esta hecha con mucho amor y cariño.
 
-- [ ] (0 a 10 puntos) 10 Puntos por implementar instant warping a diferentes puntos del sistema solar
-   - **Razón:** no hay
+## Movimiento y Rotación
+- [x] (0 a 20 puntos) Por implementar rotación en el diorama y permitir que la cámara se acerque y aleje.
+  - **Razón:** 20/20 Se permite rotación y zoom en la escena. Asi como movimiento de la luz.
 
-- [ ] (0 a 10 puntos) 10 Puntos más si el efecto está animado
-   - **Razón:** no hay
+## Materiales
+- [x] (0 a 5 puntos) 5 Puntos por cada material diferente (máximo 5).
+  - **Razón:**  25/25 Se implementan 11 diferentes materiales con texturas, parámetros de albedo, specular, transparencia y reflectividad.
 
-- [x] (0 a 30 puntos) 30 Puntos por renderizar una nave modelada por ustedes que siga a su cámara
-   - **Razón:** si hay nave y sigue a la camara hasta con efecto de rotación
+- [x] (0 a 10 puntos) Por implementar refracción en al menos un material.
+  - **Razón:** 10/10 El material de agua, vidrio y el diamante tienen propiedades de refracción.
 
-- [x] (0 a 10 puntos) 10 puntos por crear un skybox que muestre estrellas en el horizonte
-   - **Razón:** si hay, estrellas amarillas
+- [x] (0 a 5 puntos) Por implementar reflexión en al menos un material.
+  - **Razón:** 5/5 El material de agua, vidrio y el diamante tienen propiedades de reflexión.
 
-- [ ] (0 a 10 puntos) 10 puntos por implementar condicionales que eviten que la nave/cámara atraviese los elementos de su sistema solar
-   - **Razón:** no hay
+## Skybox
+- [x] (0 a 20 puntos) Por implementar un skybox para al menos un material.
+  - **Razón:** 20/20 Se implemento el skybox al entorno para darle un paisaje alrededor.
 
-- [x] (0 a 40 puntos) 40 puntos por implementar movimiento 3D para la cámara
-   - **Razón:** se mueve arriba, abajo, adelante, atras, izquierda y derecha (6 movimientos), eso cuenta como 3D? solo falta diagonal que se puede apachando 2 teclas a la vez
+## Total de Puntos: 130/130
 
-- [ ] (0 a 20 puntos) 20 puntos por renderizar las órbitas de los planetas
-   - **Razón:** no hay 
 
-   **Total de puntos: 180**
 
 ## Showcase
 
-- [Video de Juego](https://youtu.be/MrbUTDu08Pc)
-- ![Show](./images/show.png)
-- ![Show2](./images/show2.png)
+- [Video del Juego](https://youtu.be/A060aouTdyY)
+- ![Main](./screenshots/main.png)
+- ![Down](./screenshots/donw.png)
+- ![Back](./screenshots/back.png)
+- ![Zoomout](./screenshots/zoomout.png)
+- ![Shadow](./screenshots/shadow.png)
+- ![Mine](./screenshots/mine.png)
 
